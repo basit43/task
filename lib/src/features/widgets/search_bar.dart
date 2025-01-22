@@ -1,22 +1,21 @@
 import 'package:flutter/material.dart';
 
 class CustomSearchBar extends StatelessWidget {
-  const CustomSearchBar({super.key});
+  final TextEditingController controller;
+  final ValueChanged<String> onChanged;
+
+  const CustomSearchBar({super.key, required this.controller, required this.onChanged});
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      controller: controller,
+      onChanged: onChanged,
       decoration: InputDecoration(
         hintText: 'What do you feel like doing?',
-        hintStyle: TextStyle(color: Colors.grey[600]),
-        suffixIcon: Icon(Icons.search, color: Colors.grey[600]),
-        filled: true,
-        fillColor: Colors.grey[200],
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-          borderSide: BorderSide.none,
+          borderRadius: BorderRadius.circular(10.0),
         ),
-        contentPadding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
       ),
     );
   }

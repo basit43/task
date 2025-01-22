@@ -16,6 +16,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   String selectedCategory = 'Sports';
+  TextEditingController searchController = TextEditingController();
 
   final List<Map<String, dynamic>> eventCardsData = [
     {
@@ -120,12 +121,16 @@ class _HomePageState extends State<HomePage> {
     },
   ];
   List<Map<String, dynamic>> getFilteredCards() {
+    String searchQuery = searchController.text.toLowerCase();
     if (selectedCategory == 'All') {
-      return eventCardsData;
+      return eventCardsData.where((event) {
+        return event['title'].toLowerCase().contains(searchQuery); // Filter by title
+      }).toList();
     }
 
     return eventCardsData.where((event) {
-      return event['category'] == selectedCategory;
+      return event['category'] == selectedCategory &&
+          event['title'].toLowerCase().contains(searchQuery); // Filter by category and title
     }).toList();
   }
 
@@ -169,7 +174,12 @@ class _HomePageState extends State<HomePage> {
             SizedBox(
               height: 8,
             ),
-            CustomSearchBar(),
+            CustomSearchBar(
+              controller: searchController,
+              onChanged: (value) {
+                setState(() {});
+              },
+            ),
             SizedBox(
               height: 8,
             ),
